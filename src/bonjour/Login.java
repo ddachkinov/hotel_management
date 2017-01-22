@@ -49,6 +49,7 @@ public class Login extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel2.setText("Потребителско име");
 
@@ -162,7 +163,7 @@ public class Login extends javax.swing.JDialog {
                 mm.setVisible(true);
             }
             else {
-                JOptionPane.showMessageDialog(null, "Username & password Invalid");
+                JOptionPane.showMessageDialog(null, "Некоректни потребителско име или парола");
             }
         }
         catch (Exception e){
