@@ -66,10 +66,39 @@ public class MainMenu extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Стая №", "Тип", "Големина", "Цена"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setColumnSelectionAllowed(true);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTable1FocusGained(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setHeaderValue("Стая №");
+            jTable1.getColumnModel().getColumn(1).setHeaderValue("Тип");
+            jTable1.getColumnModel().getColumn(2).setHeaderValue("Големина");
+            jTable1.getColumnModel().getColumn(3).setHeaderValue("Цена");
+        }
 
         jButton1.setText("Резервирай");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -179,6 +208,10 @@ public class MainMenu extends javax.swing.JFrame {
     private void jScrollPane1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane1KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jScrollPane1KeyPressed
+
+    private void jTable1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1FocusGained
 
     /**
      * @param args the command line arguments
