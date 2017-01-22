@@ -7,14 +7,17 @@ package bonjour;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
+//import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
  * @author ddach
  */
-public class DBconnection {
-    private Connection DBcoConnection;
+public class DBconnection 
+{
+    private Connection DBConnection;
     public Connection connect(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -25,13 +28,13 @@ public class DBconnection {
         }
         String url = "jdbc:mysql://localhost:3306/bonjour";
         try{
-            DBcoConnection = (Connection) DriverManager.getConnection(url, "root", "");
+            DBConnection = (Connection) DriverManager.getConnection(url, "root", "");
             System.out.println("Database Connected");
         }
         catch (SQLException se){
             System.out.println("No Database" + se);
         }
-        return DBcoConnection;
+        return DBConnection;
     }
     
 }

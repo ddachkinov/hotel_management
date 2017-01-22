@@ -6,19 +6,26 @@
 package bonjour;
 
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author ddach
  */
 public class MainMenu extends javax.swing.JFrame {
-
+    
+     Connection conn = new DBconnection().connect();
     /**
      * Creates new form MainMenu
      */
     public MainMenu() {
         initComponents();
+ 
     }
 
     /**
@@ -183,11 +190,11 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -201,6 +208,8 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        Show_Room_Details_In_JTable();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -215,6 +224,84 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTableRoomDetailsFocusGained
 
+        //This is the Room_details_declaration
+    
+    private String RoomNo;
+    private String Room_type;
+    private String room_size;
+    private Double fare;
+
+    public MainMenu(String RoomNo, String Room_type, String room_size, Double fare) {
+        this.RoomNo = RoomNo;
+        this.Room_type = Room_type;
+        this.room_size = room_size;
+        this.fare = fare;
+    }
+
+    public String getRoomNo() {
+        return RoomNo;
+    }
+
+    public String getRoom_type() {
+        return Room_type;
+    }
+
+    public String getRoom_size() {
+        return room_size;
+    }
+
+    public Double getFare() {
+        return fare;
+    }
+        
+    
+        //Get a list of Room_details from mysql database
+    
+    public ArrayList<RoomDetails> getRoomDetailsList()
+    {
+        ArrayList<RoomDetails>roomList = new ArrayList<>();
+        
+//        Connection conn = getConnection();
+        Connection conn = new DBconnection().connect();
+
+        String query = "SELECT * FROM room_details";
+        Statement st;
+        ResultSet rs;
+        
+        try{
+            st= conn.createStatement();
+            rs=st.executeQuery(query);
+            RoomDetails roomDetails;
+            while(rs.next())
+            {
+                roomDetails = new RoomDetails(rs.getString("RoomNo"),rs.getString("Room_type"),rs.getString("room_size"),rs.getDouble("fare"));
+                roomList.add(roomDetails);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return roomList;
+    }
+    
+    //Showing the RoomDetails into the table
+    
+    public void Show_Room_Details_In_JTable()
+    {
+        ArrayList<RoomDetails> list = getRoomDetailsList();
+        DefaultTableModel model = (DefaultTableModel)jTableRoomDetails.getModel();
+        Object[] row = new Object [10];
+        for (int i=0; i>list.size(); i++)
+        {
+            row[0] = list.get(i).getRoomNo();
+            row[1] = list.get(i).getRoom_type();
+            row[2] = list.get(i).getRoom_size();
+            row[3] = list.get(i).getFare();
+            
+            model.addRow(row);
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -263,4 +350,11 @@ public class MainMenu extends javax.swing.JFrame {
     private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker2;
     // End of variables declaration//GEN-END:variables
+
+    private static class RoomDetails {
+
+        public RoomDetails() {
+        }
+    }
+
 }
