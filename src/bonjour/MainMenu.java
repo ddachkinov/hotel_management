@@ -5,12 +5,10 @@
  */
 package bonjour;
 
-import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -69,16 +67,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         jTableRoomDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Стая №", "Тип", "Големина", "Цена"
@@ -225,56 +214,58 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableRoomDetailsFocusGained
 
         //This is the Room_details_declaration
-    
-    private String RoomNo;
-    private String Room_type;
-    private String room_size;
-    private Double fare;
-
-    public MainMenu(String RoomNo, String Room_type, String room_size, Double fare) {
+    public static class RoomDetails
+    {
+        private final String RoomNo;
+        private final String Room_type;
+        private final String room_size;
+        private final Double fare;
+        
+        public RoomDetails(String RoomNo, String Room_type, String room_size, Double fare) {
         this.RoomNo = RoomNo;
         this.Room_type = Room_type;
         this.room_size = room_size;
         this.fare = fare;
     }
 
-    public String getRoomNo() {
-        return RoomNo;
-    }
+        public String getRoomNo() {
+            return RoomNo;
+        }
 
-    public String getRoom_type() {
-        return Room_type;
-    }
+        public String getRoom_type() {
+            return Room_type;
+        }
 
-    public String getRoom_size() {
-        return room_size;
-    }
+        public String getRoom_size() {
+            return room_size;
+        }
 
-    public Double getFare() {
-        return fare;
-    }
+        public Double getFare() {
+            return fare;
+        }
         
-    
+    }
+           
         //Get a list of Room_details from mysql database
     
     public ArrayList<RoomDetails> getRoomDetailsList()
     {
         ArrayList<RoomDetails>roomList = new ArrayList<>();
         
-//        Connection conn = getConnection();
-        Connection conn = new DBconnection().connect();
-
-        String query = "SELECT * FROM room_details";
-        Statement st;
-        ResultSet rs;
-        
+        Statement st = null;
+        String query = "SELECT RoomNo, Room_type, room_size, fare FROM room_details";
+                     
         try{
-            st= conn.createStatement();
-            rs=st.executeQuery(query);
+            st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
             RoomDetails roomDetails;
             while(rs.next())
             {
-                roomDetails = new RoomDetails(rs.getString("RoomNo"),rs.getString("Room_type"),rs.getString("room_size"),rs.getDouble("fare"));
+                roomDetails = new RoomDetails(
+                        rs.getString("RoomNo"),
+                        rs.getString("Room_type"),
+                        rs.getString("room_size"),
+                        rs.getDouble("fare"));
                 roomList.add(roomDetails);
             }
         } catch (Exception e) {
@@ -290,7 +281,7 @@ public class MainMenu extends javax.swing.JFrame {
         ArrayList<RoomDetails> list = getRoomDetailsList();
         DefaultTableModel model = (DefaultTableModel)jTableRoomDetails.getModel();
         Object[] row = new Object [10];
-        for (int i=0; i>list.size(); i++)
+        for (int i=0; i<list.size(); i++)
         {
             row[0] = list.get(i).getRoomNo();
             row[1] = list.get(i).getRoom_type();
@@ -318,15 +309,11 @@ public class MainMenu extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+         //</editor-fold>
+         
         //</editor-fold>
 
         /* Create and display the form */
@@ -350,11 +337,5 @@ public class MainMenu extends javax.swing.JFrame {
     private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker2;
     // End of variables declaration//GEN-END:variables
-
-    private static class RoomDetails {
-
-        public RoomDetails() {
-        }
-    }
 
 }
