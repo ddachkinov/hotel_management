@@ -123,6 +123,12 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Проверка и резервация на стаи");
 
+        jXDatePicker2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jXDatePicker2ActionPerformed(evt);
+            }
+        });
+
         jLabel5.setText("Общо нощувки:");
 
         jLabel6.setText("jLabel6");
@@ -205,6 +211,8 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        NewBooking nb = new NewBooking();
+                nb.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jScrollPane1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jScrollPane1KeyPressed
@@ -214,6 +222,10 @@ public class MainMenu extends javax.swing.JFrame {
     private void jTableRoomDetailsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableRoomDetailsFocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_jTableRoomDetailsFocusGained
+
+    private void jXDatePicker2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXDatePicker2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jXDatePicker2ActionPerformed
 
         //This is the Room_details_declaration
     public static class RoomDetails
