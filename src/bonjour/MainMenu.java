@@ -23,6 +23,7 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public MainMenu() {
         initComponents();
+//        Insert_Room_Details_In_JTable();
  
     }
 
@@ -88,7 +89,7 @@ public class MainMenu extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableRoomDetails.setColumnSelectionAllowed(true);
+        jTableRoomDetails.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableRoomDetails.getTableHeader().setReorderingAllowed(false);
         jTableRoomDetails.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -197,7 +198,8 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Show_Room_Details_In_JTable();
+        
+        Insert_Room_Details_In_JTable();
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -276,11 +278,12 @@ public class MainMenu extends javax.swing.JFrame {
     
     //Showing the RoomDetails into the table
     
-    public void Show_Room_Details_In_JTable()
+    public void Insert_Room_Details_In_JTable()
     {
         ArrayList<RoomDetails> list = getRoomDetailsList();
         DefaultTableModel model = (DefaultTableModel)jTableRoomDetails.getModel();
-        Object[] row = new Object [10];
+        model.setRowCount(0);
+        Object[] row = new Object [4];
         for (int i=0; i<list.size(); i++)
         {
             row[0] = list.get(i).getRoomNo();
