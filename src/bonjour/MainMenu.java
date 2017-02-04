@@ -131,7 +131,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel5.setText("Общо нощувки:");
 
-        jLabel6.setText("jLabel6");
+        jLabel6.setText(" ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
